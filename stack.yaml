@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app: 
+    image: dekuyo/wordle-server:latest
+    volumes:
+      - ./badger_db:/badger_db
+    secrets:
+      - wordle_pg_url
+      - wordle_paseto_key
+    ports:
+      - "9080:9080"
+    environment:
+      - POSTGRES_URL=/run/secrets/wordle_pg_url
+      - PASETO_KEY=/run/secrets/wordle_paseto_key
+      - BADGER_PATH=/badger_db
+      - PORT=9080
+
+secrets:
+  wordle_pg_url:
+    external: true
+  wordle_paseto_key:
+    external: true
